@@ -4,51 +4,63 @@
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken für 
 # metrische Variablen berechnet und ausgibt
 
-  # Eingabe: dataframe
-  # Ausgabe: Min, Max, 1. und 3. Quantil, Median, Mittelwert der metrischen Var.
-deskr_metrisch <- function(df) {
-  summary(data[sapply(df,is.numeric)])
+  # Eingabe: x  - Vektor mit metrischen Werten
+  # Ausgabe: Min, Max, Median, Mittelwert der metrischen Var.
+deskr_metrisch <- function(x) {
+  stopifnot(is.numeric(x))
+  return(list(mean = mean(x), 
+              min = min(x), 
+              max = max(x), 
+              var = var(x), 
+              sd = sd(x)),
+              length = length(x))
 }
-  # Vielleicht macht es auch mehr Sinn die metrischen Variablen direkt
-  # zu übergeben anstatt automatisch rausfiltern zu lassen?
 
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken für 
 # kategoriale Variablen berechnet und ausgibt
 
-  # Eingabe: dataframe
-  # Ausgabe: Häufigkeiten der einzelnen Kategorien
-deskr_kategorial <- function(df) {
-  index <- which(sapply(df, is.factor))
-  print("Häufigkeiten der Levels")
-  for(i in index) {
-    print(table(df[i]))
-  }
+  # Eingabe:  x         - Vektor mit kategorialer Variable (Factor)
+  # Ausgabe:  abs_hfgk  - abs. Häufigkeiten pro Kategorien
+  #           rel:hfgk  - rel. Häufigkeiten "
+      # Welche Statistiken wollen wir hier vielleicht noch bestimmen?
+deskr_kategorial <- function(x) {
+  stopifnot(is.factor(x))
+  return(list(abs_hfgk = table(x), 
+              rel_hfgk = table(x)/length(x),
+              modus = unique(x)[which.max(tabulate(match(x, unique(x))))]))
 }
-  # Welche Statistiken wollen wir hier vielleicht noch bestimmen?
 
 # Eine Funktion, die geeignete deskriptive bivariate Statistiken für 
 # den Zusammenhang zwischen zwei kategorialen Variablen berechnet ausgibt
 
-  # Eingabe: zwei kategoriale Variablen (v1, v2)
-  # Ausgabe: 
+  # Eingabe:  v1, v2        - zwei kategoriale Variablen
+  # Ausgabe:  kreuztabelle  - kreuztabelle für v1 und v2
+  #           Weitere angemessene Statistiken?
 deskr_zus_kategorial <- function(v1, v2) {
-  
+  stopifnot(is.factor(v1), is.factor(v2))
+  return(list(kreuztabelle = table(v1,v2)))
 }
 
 # Eine Funktion, die geeignete deskriptive bivariate Statistiken für 
 # den Zusammengang zwischen einer metrischen und einer dichotomen Variablen 
 # berechnet und ausgibt
 
-  # Eingabe: einen metrischen (m) und einen dichotomen Vektor (v)
-  # Ausgabe:
-deskr_zus_metr_dichot <- function(m, v) {
+  # Eingabe:  m     - metrischer  Vektor
+  #           d     - dichotomer Vektor
+  # Ausgabe:  mean1 - Mittelwert der Werte für die d = 0
+  #           mean2 - Mittelwert der Werte für die d = 1
+deskr_metr_dichot <- function(m, d) {
+  stopifnot(is.numeric(m), is.factor(d), nlevels(d) == 2)
+  mean_1 = as.numeric(c(levels(d)[1], mean(m[which(d == unique(d)[1])])))
+  mean_2 = as.numeric(c(levels(d)[2], mean(m[which(d == unique(d)[2])])))
   
+  return(list(mean1 = mean_1, mean2 = mean_2))
 }
 
 # Eine Funktion, die eine geeignete Visualisierung von drei oder vier 
 # kategorialen Variablen erstellt
 
-  # Eingabe: drei oder vier kategoriale Variablen (v1, v2, v3, (v4))
+  # Eingabe: v1, v2, (v3)   - Vektoren mit kategorialen Variablen
   # Ausgabe: 
 vis_kategorial <- function(v1, v2, v3, ...) {
   
