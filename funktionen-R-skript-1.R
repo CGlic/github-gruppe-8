@@ -1,7 +1,7 @@
 # Soll spaeter mindestens die 6 Funktionen enthalten, die in der Aufgabe
 # gefordert sind.
 
-# Eine Funktion, die verschiedene geeignete deskriptive Statistiken für 
+# Eine Funktion, die verschiedene geeignete deskriptive Statistiken fuer 
 # metrische Variablen berechnet und ausgibt
 
   # Eingabe: x  - Vektor mit metrischen Werten
@@ -27,7 +27,7 @@ deskr_kategorial <- function(x) {
   stopifnot(is.factor(x))
   return(list(abs_hfgk = table(x), 
               rel_hfgk = table(x)/length(x),
-              modus = unique(x)[which.max(tabulate(match(x, unique(x))))]))
+              modus = table(x)[which(table(x) == max(table(x)))]))
 }
 
 # Eine Funktion, die geeignete deskriptive bivariate Statistiken für 

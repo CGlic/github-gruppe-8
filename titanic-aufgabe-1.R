@@ -22,9 +22,9 @@ titanic$Pclass <- as.factor(titanic$Pclass)
 
 # fehlende Age-Werte imputieren durch Median der Anrede
   
-    # Prüfen, bei welchen Anreden NA's vorhanden sind
+    # Pruefen, bei welchen Anreden NA's vorhanden sind
   unique(titanic$Salutation[which(is.na(titanic$Age))])
-    # Prüfen, welche Anreden existieren
+    # Pruefen, welche Anreden existieren
   unique(titanic$Salutation)
   
     #Mediane der gesuchten Anreden finden
@@ -59,12 +59,12 @@ titanic$Cabin[which(titanic$Cabin == "")] <- NA
 
 # Steuerbord und Backbord Variable hinzufügen
 temp_side <- as.numeric(gsub( ".*?([0-9]+).*", "\\1", titanic$Cabin))
+
     # Hier gibts ne Warnung, funktioniert aber trotzdem
-titanic$Side <- ifelse(temp_side %% 2 == 0, "B", "S")
+titanic$Side <- ifelse(temp_side %% 2 == 0, 'B', 'S')
 
 # Variable für Deck hinzufügen
 titanic$Deck <- as.character(gsub("[0-9]", "", titanic$Cabin))
 
 # Variablen entfernen
-titanic = titanic[,c(2,3,5,6,7,8,10,12,13,14,15)]
-    # Hier gibts sicherlich ne bessere Methode, aber wusste nicht wie
+titanic = titanic[, -c(1,4,9,11)]
