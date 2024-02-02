@@ -13,7 +13,8 @@ deskr_metrisch <- function(x) {
               max = max(x), 
               var = var(x), 
               sd = sd(x)),
-              length = length(x))
+              length = length(x),
+              quantile = quantile(x))
 }
 
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken für 
@@ -21,7 +22,8 @@ deskr_metrisch <- function(x) {
 
   # Eingabe:  x         - Vektor mit kategorialer Variable (Factor)
   # Ausgabe:  abs_hfgk  - abs. Häufigkeiten pro Kategorien
-  #           rel:hfgk  - rel. Häufigkeiten "
+  #           rel:hfgk  - rel. Häufigkeiten ""          ""
+  #           modus     - alle Werte die am h�ufigsten vorkommen
       # Welche Statistiken wollen wir hier vielleicht noch bestimmen?
 deskr_kategorial <- function(x) {
   stopifnot(is.factor(x))
@@ -51,10 +53,13 @@ deskr_zus_kategorial <- function(v1, v2) {
   #           mean2 - Mittelwert der Werte für die d = 1
 deskr_metr_dichot <- function(m, d) {
   stopifnot(is.numeric(m), is.factor(d), nlevels(d) == 2)
-  mean_1 = as.numeric(c(levels(d)[1], mean(m[which(d == unique(d)[1])])))
-  mean_2 = as.numeric(c(levels(d)[2], mean(m[which(d == unique(d)[2])])))
+  mean_1 = as.numeric( mean(m[which(d == unique(d)[1])]))
+  mean_2 = as.numeric( mean(m[which(d == unique(d)[2])]))
+  temp_list <- list(mean1 = mean_1, mean2 = mean_2)
+  namen <- c(levels(d)[1], levels(d)[2])
+  names(temp_list) <- namen
   
-  return(list(mean1 = mean_1, mean2 = mean_2))
+  return(temp_list)
 }
 
 # Eine Funktion, die eine geeignete Visualisierung von drei oder vier 
@@ -62,7 +67,13 @@ deskr_metr_dichot <- function(m, d) {
 
   # Eingabe: v1, v2, (v3)   - Vektoren mit kategorialen Variablen
   # Ausgabe: 
-vis_kategorial <- function(v1, v2, v3, ...) {
+vis_kategorial <- function(v1, v2, v3) {
+  stopifnot(is.factor(v2), is.factor(v3))
   
+  data <- table(v1,v2,v3)
+  #temp_values <- data.frame(v1,v2,v3)
+  mos_plot <- mosaic(data)
+  
+  return(mos_plot)
 }
 # Freiwillig: weitere zur Deskription und Visualisierung geeignete Funktionen
