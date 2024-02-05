@@ -1,6 +1,9 @@
 # Soll spaeter mindestens die 6 Funktionen enthalten, die in der Aufgabe
 # gefordert sind.
 
+library("grid")
+library("vcd")
+
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken fuer 
 # metrische Variablen berechnet und ausgibt
 
@@ -21,9 +24,9 @@ deskr_metrisch <- function(x) {
 # kategoriale Variablen berechnet und ausgibt
 
   # Eingabe:  x         - Vektor mit kategorialer Variable (Factor)
-  # Ausgabe:  abs_hfgk  - abs. Häufigkeiten pro Kategorien
-  #           rel:hfgk  - rel. Häufigkeiten ""          ""
-  #           modus     - alle Werte die am h�ufigsten vorkommen
+  # Ausgabe:  abs_hfgk  - abs. Haeufigkeiten pro Kategorien
+  #           rel_hfgk  - rel. Haeufigkeiten ""          ""
+  #           modus     - alle Werte die am haeufigsten vorkommen
       # Welche Statistiken wollen wir hier vielleicht noch bestimmen?
 deskr_kategorial <- function(x) {
   stopifnot(is.factor(x))
@@ -32,7 +35,7 @@ deskr_kategorial <- function(x) {
               modus = table(x)[which(table(x) == max(table(x)))]))
 }
 
-# Eine Funktion, die geeignete deskriptive bivariate Statistiken für 
+# Eine Funktion, die geeignete deskriptive bivariate Statistiken fuer 
 # den Zusammenhang zwischen zwei kategorialen Variablen berechnet ausgibt
 
   # Eingabe:  v1, v2        - zwei kategoriale Variablen
@@ -43,7 +46,7 @@ deskr_zus_kategorial <- function(v1, v2) {
   return(list(kreuztabelle = table(v1,v2)))
 }
 
-# Eine Funktion, die geeignete deskriptive bivariate Statistiken für 
+# Eine Funktion, die geeignete deskriptive bivariate Statistiken fuer 
 # den Zusammengang zwischen einer metrischen und einer dichotomen Variablen 
 # berechnet und ausgibt
 
@@ -65,15 +68,16 @@ deskr_metr_dichot <- function(m, d) {
 # Eine Funktion, die eine geeignete Visualisierung von drei oder vier 
 # kategorialen Variablen erstellt
 
-  # Eingabe: v1, v2, (v3)   - Vektoren mit kategorialen Variablen
-  # Ausgabe: 
-vis_kategorial <- function(v1, v2, v3) {
+  # Eingabe: v1, v2, v3, (v4)   - Vektoren mit kategorialen Variablen
+  # Ausgabe: Mosaikplot und Häufigkeitstabelle
+vis_kategorial <- function(v1, v2, v3, v4 = numeric(0)) {
   stopifnot(is.factor(v2), is.factor(v3))
-  
-  data <- table(v1,v2,v3)
-  #temp_values <- data.frame(v1,v2,v3)
+  if(length(v4) > 0) {
+    if(is.factor(v4)) { 
+      data <- table(v1, v2, v3, v4) 
+    }
+  } else data <- table(v1, v2, v3)
   mos_plot <- mosaic(data)
-  
   return(mos_plot)
 }
 # Freiwillig: weitere zur Deskription und Visualisierung geeignete Funktionen
