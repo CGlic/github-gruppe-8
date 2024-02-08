@@ -29,12 +29,17 @@ titanic$Pclass <- as.ordered(titanic$Pclass)
   unique(titanic$Salutation)
   
     #Mediane der gesuchten Anreden finden
-  med_age_mr <- median(titanic$Age[which(titanic$Salutation == "Mr")], na.rm = TRUE)
-          # hier moeglichwerweise auch: Don, Rev, Major, Sir, Col, Capt, Jonkheer?
-  med_age_master <- median(titanic$Age[which((titanic$Salutation == "Master"))], na.rm = TRUE)
-  med_age_mrs <- median(titanic$Age[which((titanic$Salutation == "Mrs"))], na.rm = TRUE)
-          # hier moeglicherweise auch: Lady, the Countess?
-  med_age_ms <- median(titanic$Age[titanic$Salutation %in% list("Ms", "Mlle", "Miss")], na.rm = TRUE)
+  med_age_mr <- median(titanic$Age[which(titanic$Salutation == "Mr")],
+                       na.rm = TRUE)
+        # hier moeglichwerweise auch: Don, Rev, Major, Sir, Col, Capt, Jonkheer?
+  med_age_master <- median(titanic$Age[which((titanic$Salutation == "Master"))],
+                           na.rm = TRUE)
+  med_age_mrs <- median(titanic$Age[which((titanic$Salutation == "Mrs"))],
+                        na.rm = TRUE)
+        # hier moeglicherweise auch: Lady, the Countess?
+  med_age_ms <-
+    median(titanic$Age[titanic$Salutation %in% list("Ms", "Mlle", "Miss")],
+           na.rm = TRUE)
   med_age_dr <- median(titanic$Age[titanic$Salutation == "Dr"], na.rm = TRUE)
   
   
@@ -42,9 +47,11 @@ titanic$Pclass <- as.ordered(titanic$Pclass)
   age_na <- which(is.na(titanic$Age))
   
   index_na_mr <- intersect(age_na, which(titanic$Salutation %in% list("Mr")))
-  index_na_master <- intersect(age_na, which(titanic$Salutation %in% list("Master")))
+  index_na_master <- intersect(age_na, which(titanic$Salutation %in%
+                                               list("Master")))
   index_na_mrs <- intersect(age_na, which(titanic$Salutation %in% list("Mrs")))
-  index_na_ms <- intersect(age_na, which(titanic$Salutation %in% list("Ms", "Mlle", "Miss")))
+  index_na_ms <- intersect(age_na, which(titanic$Salutation %in%
+                                           list("Ms", "Mlle", "Miss")))
   index_na_dr <- intersect(age_na, which(titanic$Salutation %in% list("Dr")))
   
     # NAs ersetzen
