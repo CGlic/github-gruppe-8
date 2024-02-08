@@ -1,7 +1,7 @@
 # Gruppe 08
 # Aufgabe 1
 
-titanic <- read.csv("~/GitHub/github-gruppe-8/titanic.csv")
+titanic <- read.csv("titanic.csv")
 View(titanic)
 
 # Anrede in Salutation extrahieren
@@ -12,13 +12,14 @@ temp_split <- unlist(lapply(temp_split, "[", c(1)))
 titanic$Salutation <- temp_split 
 rm(temp_split)
 
-# Codierung der Variablen Sex, Survived,Embarkeds 
-titanic$Sex <- as.factor(ifelse(titanic$Sex == "male", 1, 0))
-titanic$Survived <- as.factor(titanic$Survived)
+# Codierung der Variablen Sex, Survived, Embarkeds 
+titanic$Sex <- factor(titanic$Sex, levels = c("female", "male"))
+titanic$Survived <- factor(titanic$Survived, levels = c("0", "1"),
+                           labels = c("No", "Yes"))
 titanic$Embarked <- as.factor(titanic$Embarked)
 
-# Pclass in einen ordered-factor überführen
-titanic$Pclass <- as.factor(titanic$Pclass)
+# Pclass in einen ordered-factor ueberfuehren
+titanic$Pclass <- as.ordered(titanic$Pclass)
 
 # fehlende Age-Werte imputieren durch Median der Anrede
   
@@ -29,10 +30,10 @@ titanic$Pclass <- as.factor(titanic$Pclass)
   
     #Mediane der gesuchten Anreden finden
   med_age_mr <- median(titanic$Age[which(titanic$Salutation == "Mr")], na.rm = TRUE)
-          # hier möglichwerweise auch: Don, Rev, Major, Sir, Col, Capt, Jonkheer?
+          # hier moeglichwerweise auch: Don, Rev, Major, Sir, Col, Capt, Jonkheer?
   med_age_master <- median(titanic$Age[which((titanic$Salutation == "Master"))], na.rm = TRUE)
   med_age_mrs <- median(titanic$Age[which((titanic$Salutation == "Mrs"))], na.rm = TRUE)
-          # hier möglicherweise auch: Lady, the Countess?
+          # hier moeglicherweise auch: Lady, the Countess?
   med_age_ms <- median(titanic$Age[titanic$Salutation %in% list("Ms", "Mlle", "Miss")], na.rm = TRUE)
   med_age_dr <- median(titanic$Age[titanic$Salutation == "Dr"], na.rm = TRUE)
   
@@ -53,17 +54,17 @@ titanic$Pclass <- as.factor(titanic$Pclass)
   titanic$Age[index_na_ms] <- med_age_ms
   titanic$Age[index_na_dr] <- med_age_dr
 
-  # fehlende Werte in Cabin zu NA's ändern
+  # fehlende Werte in Cabin zu NA's aendern
 titanic$Cabin[which(titanic$Cabin == "")] <- NA
   # Besondere Handhabung bei mehreren Kabinennummern? (s. z.B. Passagier Nr. 89)
 
-# Steuerbord und Backbord Variable hinzufügen
+# Steuerbord und Backbord Variable hinzufuegen
 temp_side <- as.numeric(gsub( ".*?([0-9]+).*", "\\1", titanic$Cabin))
 
     # Hier gibts ne Warnung, funktioniert aber trotzdem
 titanic$Side <- ifelse(temp_side %% 2 == 0, 'B', 'S')
 
-# Variable für Deck hinzufügen
+# Variable fuer Deck hinzufuegen
 titanic$Deck <- as.character(gsub("[0-9]", "", titanic$Cabin))
 
 # Variablen entfernen
