@@ -70,8 +70,6 @@ titanic$Cabin[which(titanic$Cabin == "")] <- NA
 
 # Steuerbord und Backbord Variable hinzufuegen
 temp_side <- as.numeric(gsub( ".*?([0-9]+).*", "\\1", titanic$Cabin))
-
-    # Hier gibts ne Warnung, funktioniert aber trotzdem
 titanic$Side <- ifelse(temp_side %% 2 == 0, 'B', 'S')
 
 # Variable fuer Deck hinzufuegen
@@ -79,7 +77,6 @@ titanic$Deck <- as.character(gsub("[0-9]", "", titanic$Cabin))
 
 # Variablen entfernen
 titanic = titanic[, -c(1,4,9,11)]
-
 
 # Aufgeraeumten Datensatz speichern
 write.csv(titanic, "titanic_clean.csv", row.names = FALSE)
