@@ -18,9 +18,9 @@ deskr_metrisch <- function(x) {
               min = min(x), 
               max = max(x), 
               var = var(x), 
-              sd = sd(x)),
+              sd = sd(x),
               length = length(x),
-              quantile = quantile(x))
+              quantile = quantile(x)))
 }
 
 # Eine Funktion, die verschiedene geeignete deskriptive Statistiken fuer 
