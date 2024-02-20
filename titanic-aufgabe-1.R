@@ -80,3 +80,4 @@ titanic = titanic[, -c(1,4,9,11)]
 
 # Aufgeraeumten Datensatz speichern
 write.csv(titanic, "titanic_clean.csv", row.names = FALSE)
+saveRDS(titanic, "titanic_clean.rds")
