@@ -126,16 +126,19 @@ deskr_metr_dichot <- function(m, d) {
   # F-Test
   f_test <- var.test(m ~ d)
   
-  return(list(mean_1 = mean_1, 
-              mean_2 = mean_2, 
-              var_1 = var_1, 
-              var_2 = var_2, 
-              t_stat = t_test$statistic, 
-              t_p_value = t_test$p.value,
-              f_stat = f_test$statistic,
-              f_p_value = f_test$p.value
-              )
-         )
+  return(
+    list(
+      levels = levels(d),
+      mean_1 = mean_1,
+      mean_2 = mean_2,
+      var_1 = var_1,
+      var_2 = var_2,
+      t_stat = t_test$statistic,
+      t_p_value = t_test$p.value,
+      f_stat = f_test$statistic,
+      f_p_value = f_test$p.value
+      )
+    )
 }
 
 # Eine Funktion, die eine geeignete Visualisierung von drei oder vier 
