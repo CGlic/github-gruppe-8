@@ -2,6 +2,8 @@ source("funktionen-R-skript-1.R")
 
 titanic = readRDS("titanic_clean.rds")
 
+
+
 # (i) Eine Funktion, die verschiedene geeignete deskriptive Statistiken für 
 #     metrische Variablen berechnet und ausgibt. 
 
@@ -17,12 +19,13 @@ titanic = readRDS("titanic_clean.rds")
           deskr_fare <- deskr_metrisch(titanic$Fare)
           boxplot(titanic$Fare, ylim = c(0,100))
 
-
+          
+          
 # (ii) Eine Funktion, die verschiedene geeignete deskriptive Statistiken für 
 #      kategoriale Variablen berechnet und ausgibt.
 
-#      (1) Dekripitve Analyse der Passagierklasse der Passagiere und 
-#          visualisierung in einem Balkendiagramm
+#      (1) Dekripitve Analyse der Passagierklasse  und visualisierung
+#          in einem Balkendiagramm
 
           deskr_Pclass <- deskr_kategorial(titanic$Pclass)
 
@@ -35,14 +38,10 @@ titanic = readRDS("titanic_clean.rds")
                   col = "skyblue", # Farbe der Balken
                   border = "black", # Farbe der Balkenränder
                   ylim = c(0, 800), # Begrenzung der y-Achse von 0 bis 1
-                  beside = TRUE, # Nebeneinander angeordnete Balken
-                  legend.text = "Absolute Häufigkeit", # Beschriftung der Legende
-                  args.legend = list(x = "topleft")) # Legende oben links anzeigen
+                  beside = TRUE) # Nebeneinander angeordnete Balken
           
-          # Linie für den Median
+          # Hinzufügen einer Linie und einer Legende für den Median
           abline(v = deskr_Pclass$median, col = "red", lwd = 2)
-          
-          # Hinzufügen einer Legende für den Median
           legend("topleft", legend = "Median", col = "red", lwd = 2, bty = "n")
           
                     
@@ -55,15 +54,45 @@ titanic = readRDS("titanic_clean.rds")
                   col = "skyblue", # Farbe der Balken
                   border = "black", # Farbe der Balkenränder
                   ylim = c(0, 1), # Begrenzung der y-Achse von 0 bis 1
-                  beside = TRUE, # Nebeneinander angeordnete Balken
-                  legend.text = "Relative Häufigkeit", # Beschriftung der Legende
-                  args.legend = list(x = "topleft")) # Legende oben links anzeigen
+                  beside = TRUE) # Nebeneinander angeordnete Balken
           
           # Linie für den Median
           abline(v = deskr_Pclass$median, col = "red", lwd = 2)
-          
           # Hinzufügen einer Legende für den Median
           legend("topleft", legend = "Median", col = "red", lwd = 2, bty = "n")
           
+         
+          
+          
+#      (3) Dekripitve Analyse des Überlebensstatus der Passagiere und
+#          visualiserung in einem Balkendiagramm
+          
+          deskr_survived <- deskr_kategorial(titanic$Survived)
+          
+          #Barplot für relative Häufigkeit
+          barplot(deskr_survived$rel_hfgk, 
+                  main = "Relative Häufigkeiten der Überlebenden", 
+                  xlab = "Mortalität", 
+                  ylab = "Relative Häufigkeit", 
+                  names.arg = c("Nicht Überlebt", "Überlebt"),
+                  col = "lightblue", # Farbe der Balken
+                  border = "black", # Farbe der Balkenränder
+                  ylim = c(0, 1), # Begrenzung der y-Achse von 0 bis 1
+                  beside = TRUE) # Nebeneinander angeordnete Balken
+          
+          
+          #Barplot für relative Häufigkeit
+          barplot(deskr_survived$abs_hfgk, 
+                  main = "Absolute Häufigkeiten der Überlebenden", 
+                  xlab = "Mortalität", 
+                  ylab = "Absolute Häufigkeit", 
+                  names.arg = c("Nicht Überlebt", "Überlebt"),
+                  col = "lightblue", # Farbe der Balken
+                  border = "black", # Farbe der Balkenränder
+                  ylim = c(0, 1000), # Begrenzung der y-Achse von 0 bis 1000
+                  beside = TRUE) # Nebeneinander angeordnete Balken
+          
+          
+        
           
 
