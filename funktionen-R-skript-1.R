@@ -106,17 +106,36 @@ deskr_zus_kategorial <- function(v1, v2) {
 
   # Eingabe:  m     - metrischer Vektor
   #           d     - dichotomer Vektor
-  # Ausgabe:  mean1 - Mittelwert der Werte fuer die d = 0
-  #           mean2 - Mittelwert der Werte fuer die d = 1
+  # Ausgabe:  Eine benannte Liste mit den Mittelwerten der metrischen Variablen
+  #           fuer die beiden Kategorien der dichotomen Variablen, sowie den
+  #           Varianzen, dazu die t-Statistik und den p-Wert des t-Tests
 deskr_metr_dichot <- function(m, d) {
   stopifnot(is.numeric(m), is.factor(d), nlevels(d) == 2)
-  mean_1 = as.numeric(mean(m[which(d == unique(d)[1])]))
-  mean_2 = as.numeric(mean(m[which(d == unique(d)[2])]))
-  temp_list <- list(mean1 = mean_1, mean2 = mean_2)
-  namen <- c(levels(d)[1], levels(d)[2])
-  names(temp_list) <- namen
   
-  return(temp_list)
+  # Mittelwerte fuer die jeweilige Gruppe der dichotomen Variable
+  mean_1 <- mean(m[d == levels(d)[1]])
+  mean_2 <- mean(m[d == levels(d)[2]])
+  
+  # Varianzen der Gruppen
+  var_1 <- var(m[d == levels(d)[1]])
+  var_2 <- var(m[d == levels(d)[2]])
+  
+  # t-Test
+  t_test <- t.test(m ~ d)
+  
+  # F-Test
+  f_test <- var.test(m ~ d)
+  
+  return(list(mean_1 = mean_1, 
+              mean_2 = mean_2, 
+              var_1 = var_1, 
+              var_2 = var_2, 
+              t_stat = t_test$statistic, 
+              t_p_value = t_test$p.value,
+              f_stat = f_test$statistic,
+              f_p_value = f_test$p.value
+              )
+         )
 }
 
 # Eine Funktion, die eine geeignete Visualisierung von drei oder vier 
