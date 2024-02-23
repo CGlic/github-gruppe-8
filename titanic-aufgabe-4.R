@@ -1,6 +1,6 @@
 source("funktionen-R-skript-1.R")
 
-titanic = readRDS("titanic_clean.rds")
+titanic <- readRDS("titanic_clean.rds")
 
 
 
@@ -11,7 +11,7 @@ titanic = readRDS("titanic_clean.rds")
 #         einem Boxplot 
 
           deskr_age <- deskr_metrisch(titanic$Age)
-          boxplot(titanic_clean$Age, ylim = c(0,100))
+          boxplot(titanic$Age, ylim = c(0,100))
 
 #     (2) Deskriptive Analyse der Ticketpreise, die die Passagiere gezahlt haben
 #         und visualiserung in einem Boxplot
@@ -35,7 +35,7 @@ titanic = readRDS("titanic_clean.rds")
                   xlab = "Passagierklasse", 
                   ylab = "Absolute Häufigkeit", 
                   names.arg = c("1.Klasse", "2.Klasse", "3.Klasse"),
-                  col = "skyblue", # Farbe der Balken
+                  col = "lightblue", # Farbe der Balken
                   border = "black", # Farbe der Balkenränder
                   ylim = c(0, 800), # Begrenzung der y-Achse von 0 bis 1
                   beside = TRUE) # Nebeneinander angeordnete Balken
@@ -51,7 +51,7 @@ titanic = readRDS("titanic_clean.rds")
                   xlab = "Passagierklasse", 
                   ylab = "Relative Häufigkeit", 
                   names.arg = c("1.Klasse", "2.Klasse", "3.Klasse"),
-                  col = "skyblue", # Farbe der Balken
+                  col = "lightblue", # Farbe der Balken
                   border = "black", # Farbe der Balkenränder
                   ylim = c(0, 1), # Begrenzung der y-Achse von 0 bis 1
                   beside = TRUE) # Nebeneinander angeordnete Balken
@@ -117,7 +117,7 @@ titanic = readRDS("titanic_clean.rds")
                        main = "Kreuztabelle: Geschlecht vs. Deck",
                        xlab = "Geschlecht", 
                        ylab = "Deck", 
-                       color = c("#F0F8FF","darkblue","lightblue"), # Farben für die Rechtecke
+                       color = c("#F0F8FF","lightblue","darkblue"), # Farben für die Rechtecke
                        legend = TRUE) # Legende anzeige
 
 #       (3) Analyse des Zusammenhangs zwischen Geschlecht und 
@@ -142,7 +142,7 @@ titanic = readRDS("titanic_clean.rds")
                        main = "Kreuztabelle: Überlebensstatus vs. Passagierklasse",
                        xlab = "Überlebensstatus", 
                        ylab = "Passagierklasse", 
-                       color = c("#F0F8FF","darkblue","lightblue"), # Farben für die Rechtecke
+                       color = c("#F0F8FF","lightblue","darkblue"), # Farben für die Rechtecke
                        legend = TRUE) # Legende anzeige
             
             
@@ -156,18 +156,24 @@ titanic = readRDS("titanic_clean.rds")
             
             metr.age_dichot.survived <- deskr_metr_dichot(titanic$Age,
                                                           titanic$Survived)
-            # Konvertierung der Liste in einen Dataframe
-            df_metr.age_dichot.survived <- data.frame(Status = names(metr.age_dichot.survived), 
-                                                      Alter = unlist(metr.age_dichot.survived))
             
-            # Balkendiagramm erstellen
-            barplot( df_metr.age_dichot.survived$Alter, 
-                     names.arg =  df_metr.age_dichot.survived$Status, 
-                     col = c("red", "green"),
-                     main = "Verteilung des Alters für Überlebende und Nicht-Überlebende",
-                     xlab = "Überlebt", ylab = "Alter", 
-                     ylim = c(0, max( df_metr.age_dichot.survived$Alter) * 1.2))
-
+            # Balkendiagramm für Varianzen
+            barplot(c(metr.age_dichot.survived$var_1, metr.age_dichot.survived$var_2), 
+                    names.arg = c("No", "Yes"),
+                    main = "Varianzvergleich der Alter von Überlebenden und Nicht-Überlebenden",
+                    ylab = "Varianz",
+                    xlab = "Survived",
+                    col = c("blue", "green"),
+                    ylim = c(0, max(c(metr.age_dichot.survived$var_1, metr.age_dichot.survived$var_2)) * 1.2))
+            
+            # Balkendiagramm für Durchschnitt
+            barplot(c(metr.age_dichot.survived$mean_1, metr.age_dichot.survived$mean_2), 
+                    names.arg = c("No", "Yes"),
+                    main = "Durchschnittsvergleich der Alter von Überlebenden und Nicht-Überlebenden",
+                    ylab = "Durchschnitt",
+                    xlab = "Survived",
+                    col = c("blue", "green"),
+                    ylim = c(0, max(c(metr.age_dichot.survived$mean_1, metr.age_dichot.survived$mean_2)) * 1.2))
             
 #      (2) Analyse des Zusammenhangs zwischen Überleben (Survived) und 
 #          Ticketpreis (Fare) visualisierung in einem Balkendiagramm
@@ -175,57 +181,73 @@ titanic = readRDS("titanic_clean.rds")
             metr.fare_dichot.survived <- deskr_metr_dichot(titanic$Fare,
                                                               titanic$Survived)
             
-            # Konvertierung der Liste in einen Dataframe
-            df_metr.fare_dichot.survived <- data.frame(Status = names(metr.fare_dichot.survived), 
-                                                      Ticketpreis = unlist(metr.fare_dichot.survived))
+            # Balkendiagramm für Varianzen
+            barplot(c(metr.fare_dichot.survived$var_1, metr.fare_dichot.survived$var_2), 
+                    names.arg = c("No", "Yes"),
+                    main = "Varianzvergleich der Ticketpreise von Überlebenden und Nicht-Überlebenden",
+                    ylab = "Varianz",
+                    xlab = "Überlebensrate",
+                    col = c("blue", "green"),
+                    ylim = c(0, max(c(metr.fare_dichot.survived$var_1, metr.fare_dichot.survived$var_2)) * 1.2))
             
-            # Balkendiagramm erstellen
-            barplot( df_metr.fare_dichot.survived$Ticketpreis, 
-                     names.arg =  df_metr.fare_dichot.survived$Status, 
-                     col = c("red", "green"),
-                     main = "Verteilung des Tcketpreises für Überlebende und Nicht-Überlebende",
-                     xlab = "Überlebt", ylab = "Ticketpreis", 
-                     ylim = c(0, max(df_metr.fare_dichot.survived$Ticketpreis) * 1.2))
+            # Balkendiagramm für Durchschnitt
+            barplot(c(metr.fare_dichot.survived$mean_1, metr.fare_dichot.survived$mean_2), 
+                    names.arg = c("No", "Yes"),
+                    main = "Durchschnittsvergleich der Ticketpreise von Überlebenden und Nicht-Überlebenden",
+                    ylab = "Durchschnitt",
+                    xlab = "Überlebensstatus",
+                    col = c("blue", "green"),
+                    ylim = c(0, max(c(metr.fare_dichot.survived$mean_1, metr.fare_dichot.survived$mean_2)) * 1.2))
             
-            
+           
 #      (3) Analyse des Zusammenhangs zwischen Geschlecht (Sex) und Anzahl der 
 #          Geschwister/Ehepartner an Bord (SibSp) und visualiserung in einem
 #          Balkendiagramm
             
             metr.SibSp_dichot.sex <- deskr_metr_dichot(titanic$SibSp,titanic$Sex)
             
-            # Konvertierung der Liste in einen Dataframe
-            df_metr.SibSp_dichot.sex <- data.frame(Geschlecht = names(metr.SibSp_dichot.sex), 
-                                                   SibSp = unlist(metr.SibSp_dichot.sex))
-            
-            # Balkendiagramm erstellen
-            barplot(df_metr.SibSp_dichot.sex$SibSp, 
-                    names.arg =  df_metr.SibSp_dichot.sex$Geschlecht, 
-                    col = c("red", "green"),
-                    main = "Verteilung des Tcketpreises für Überlebende und Nicht-Überlebende",
-                    xlab = "Überlebt", ylab = "Ticketpreis", 
-                    ylim = c(0, max(df_metr.SibSp_dichot.sex$SibSp) * 1.2))
+            # Balkendiagramm für Varianzen
+            barplot(c(metr.SibSp_dichot.sex$var_1, metr.SibSp_dichot.sex$var_2), 
+                    names.arg = c("No", "Yes"),
+                    main = "Varianzvergleich der SibSp von Überlebenden und Nicht-Überlebenden",
+                    ylab = "Varianz",
+                    xlab = "Geschlecht",
+                    col = c("blue", "green"),
+                    ylim = c(0, max(c(metr.SibSp_dichot.sex$var_1, metr.SibSp_dichot.sex$var_2)) * 1.2))
             
             
+            # Balkendiagramm für Durchschnitt
+            barplot(c(metr.SibSp_dichot.sex$mean_1, metr.SibSp_dichot.sex$mean_2), 
+                    names.arg = c("No", "Yes"),
+                    main = "Durchschnittsvergleich der Ticketpreise von Überlebenden und Nicht-Überlebenden",
+                    ylab = "Durchschnitt",
+                    xlab = "Überlebensstatus",
+                    col = c("blue", "green"),
+                    ylim = c(0, max(c(metr.SibSp_dichot.sex$mean_1, metr.SibSp_dichot.sex$mean_2)) * 1.2))
             
 #      (4) Analyse des Zusammenhangs zwischen Geschlecht (Sex) und Anzahl der 
 #          Eltern/Kinder an Bord (Parch) und visualiserung in einem Balkendiagramm
             
             metr.Parch_dichot.sex <- deskr_metr_dichot(titanic$Parch,titanic$Sex)
+           
             
-            # Konvertierung der Liste in einen Dataframe
-            df_metr.Parch_dichot.sex <- data.frame(Geschlecht = names(metr.Parch_dichot.sex), 
-                                                   Parch = unlist(metr.Parch_dichot.sex))
+            # Balkendiagramm für Varianzen
+            barplot(c(metr.Parch_dichot.sex$var_1, metr.Parch_dichot.sex$var_2), 
+                    names.arg = c("No", "Yes"),
+                    main = "Varianzvergleich der Parch von Männern und Frauen",
+                    ylab = "Varianz",
+                    xlab = "Überlebensrate",
+                    col = c("blue", "green"),
+                    ylim = c(0, max(c(metr.Parch_dichot.sex$var_1, metr.Parch_dichot.sex$var_2)) * 1.2))
             
-            # Balkendiagramm erstellen
-            barplot( df_metr.Parch_dichot.sex$Parch, 
-                     names.arg = df_metr.Parch_dichot.sex$Geschlecht, 
-                     col = c("red", "green"),
-                    main = "Verteilung des Tcketpreises für Überlebende und Nicht-Überlebende",
-                    xlab = "Überlebt", ylab = "Ticketpreis", 
-                    ylim = c(0, max( df_metr.Parch_dichot.sex$Parch) * 1.2))
-            
-            
+            # Balkendiagramm für Durchschnitt
+            barplot(c(metr.Parch_dichot.sex$mean_1, metr.Parch_dichot.sex$mean_2), 
+                    names.arg = c("No", "Yes"),
+                    main = "Durchschnittsvergleich der Parch von Männern und Frauen",
+                    ylab = "Durchschnitt",
+                    xlab = "Überlebensstatus",
+                    col = c("blue", "green"),
+                    ylim = c(0, max(c(metr.Parch_dichot.sex$mean_1, metr.Parch_dichot.sex$mean_2)) * 1.2))
             
 # (v) Eine Funktion, die eine geeignete Visualisierung von drei oder vier 
 #     kategorialen Variablen erstellt
