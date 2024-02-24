@@ -2,6 +2,7 @@ source("funktionen-R-skript-1.R")
 
 titanic <- readRDS("titanic_clean.rds")
 
+pdf("titanic_auswertung.pdf", width = 10, height = 8)
 
 
 # (i) Eine Funktion, die verschiedene geeignete deskriptive Statistiken für 
@@ -11,13 +12,15 @@ titanic <- readRDS("titanic_clean.rds")
 #         einem Boxplot 
 
           deskr_age <- deskr_metrisch(titanic$Age)
-          boxplot(titanic$Age, ylim = c(0,100))
+          boxplot(titanic$Age, ylim = c(0,100), main = "Alter der Passagiere",
+                  ylab = "Alter in Jahren")
 
 #     (2) Deskriptive Analyse der Ticketpreise, die die Passagiere gezahlt haben
 #         und visualiserung in einem Boxplot
 
           deskr_fare <- deskr_metrisch(titanic$Fare)
-          boxplot(titanic$Fare, ylim = c(0,100))
+          boxplot(titanic$Fare, ylim = c(0,100), main = "Ticketpreise",
+                  ylab = "Preis in $")
 
           
           
@@ -263,3 +266,4 @@ titanic <- readRDS("titanic_clean.rds")
             
             
 
+dev.off()
