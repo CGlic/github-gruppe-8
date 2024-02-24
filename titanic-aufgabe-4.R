@@ -27,7 +27,7 @@ pdf("titanic_auswertung.pdf", width = 10, height = 8)
 # (ii) Eine Funktion, die verschiedene geeignete deskriptive Statistiken für 
 #      kategoriale Variablen berechnet und ausgibt.
 
-#      (1) Dekripitve Analyse der Passagierklasse  und visualisierung
+#      (1) Deskripitve Analyse der Passagierklasse  und visualisierung
 #          in einem Balkendiagramm
 
           deskr_Pclass <- deskr_kategorial(titanic$Pclass)
@@ -66,7 +66,7 @@ pdf("titanic_auswertung.pdf", width = 10, height = 8)
          
           
           
-#      (2) Dekripitve Analyse des Überlebensstatus der Passagiere und
+#      (2) Deskripitve Analyse des Überlebensstatus der Passagiere und
 #          visualiserung in einem Balkendiagramm
           
           deskr_survived <- deskr_kategorial(titanic$Survived)
@@ -83,7 +83,7 @@ pdf("titanic_auswertung.pdf", width = 10, height = 8)
                   beside = TRUE) # Nebeneinander angeordnete Balken
           
           
-          #Barplot für relative Häufigkeit
+          #Barplot für absolute Häufigkeit
           barplot(deskr_survived$abs_hfgk, 
                   main = "Absolute Häufigkeiten der Überlebenden", 
                   xlab = "Mortalität", 
@@ -124,7 +124,7 @@ pdf("titanic_auswertung.pdf", width = 10, height = 8)
                        legend = TRUE) # Legende anzeige
 
 #       (3) Analyse des Zusammenhangs zwischen Geschlecht und 
-#           Passagierklasse (Pclass) und visualiserung in einem ...
+#           Passagierklasse (Pclass) und visualiserung in einem Mosaikplot
             
             deskr_sex_Pclass <- deskr_zus_kategorial(titanic$Sex,titanic$Pclass) 
             
@@ -136,7 +136,7 @@ pdf("titanic_auswertung.pdf", width = 10, height = 8)
                        legend = TRUE) # Legende anzeige           
             
 #       (4) Analyse des Zusammenhangs zwischen Überleben (Survived) und 
-#           Passagierklasse (Pclass) und visualiserung in einem ...
+#           Passagierklasse (Pclass) und visualiserung in einem Mosaikplot
           
             deskr_survived_Pclass <- deskr_zus_kategorial(titanic$Survived,
                                                           titanic$Pclass) 
@@ -155,7 +155,7 @@ pdf("titanic_auswertung.pdf", width = 10, height = 8)
 #      berechnet und ausgibt
             
 #      (1) Analyse des Zusammenhangs zwischen Überleben (Survived) und Alter und
-#          visualisierung in einem ...
+#          visualisierung in einem Balkendiagramm
             
             metr.age_dichot.survived <- deskr_metr_dichot(titanic$Age,
                                                           titanic$Survived)
