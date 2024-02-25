@@ -43,9 +43,6 @@ pdf("titanic_auswertung.pdf", width = 10, height = 8)
                   ylim = c(0, 800), # Begrenzung der y-Achse von 0 bis 1
                   beside = TRUE) # Nebeneinander angeordnete Balken
           
-          # Hinzufügen einer Linie und einer Legende für den Median
-          abline(v = deskr_Pclass$median, col = "red", lwd = 2)
-          legend("topleft", legend = "Median", col = "red", lwd = 2, bty = "n")
           
                     
           # Balkendiagramm für relative Häufigkeiten
@@ -59,9 +56,6 @@ pdf("titanic_auswertung.pdf", width = 10, height = 8)
                   ylim = c(0, 1), # Begrenzung der y-Achse von 0 bis 1
                   beside = TRUE) # Nebeneinander angeordnete Balken
           
-          # Hinzufügen einer Linie und einer Legende für den Median
-          abline(v = deskr_Pclass$median, col = "red", lwd = 2)
-          legend("topleft", legend = "Median", col = "red", lwd = 2, bty = "n")
           
          
           
