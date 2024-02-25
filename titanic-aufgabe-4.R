@@ -165,7 +165,8 @@ pdf("titanic_auswertung.pdf", width = 10, height = 8)
             
             # Balkendiagramm für Durchschnitt
             barplot(c(metr.age_dichot.survived$mean_1, metr.age_dichot.survived$mean_2), 
-                    names.arg = c("No", "Yes"),
+                    names.arg = c(paste("No, \n SD: ", round(sqrt(metr.age_dichot.survived$var_1))), 
+                                  paste("Yes \n SD: ", round(sqrt(metr.age_dichot.survived$var_2)))),
                     main = "Durchschnittsvergleich der Alter von Überlebenden und Nicht-Überlebenden",
                     ylab = "Durchschnitt",
                     xlab = "Survived",
